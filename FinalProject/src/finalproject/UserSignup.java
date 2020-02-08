@@ -71,6 +71,11 @@ public class UserSignup extends JFrame implements ActionListener{
         {
             try {
                 databse db = new databse();
+                if(txtname.getText().trim().isEmpty() || txtpassword.getText().trim().isEmpty() || txtemail.getText().trim().isEmpty())
+                        {
+                            JOptionPane.showMessageDialog(rootPane, "Please fill the Email, Username & password");
+                            return;
+                        }
                 int result = db.usersignup(txtname.getText(), txtpassword.getText(), txtemail.getText());
                 if(result>0)
                 {

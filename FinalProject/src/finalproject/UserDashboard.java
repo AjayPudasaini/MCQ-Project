@@ -5,6 +5,7 @@
  */
 package finalproject;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -24,41 +25,60 @@ public class UserDashboard extends JFrame implements ActionListener{
        JComboBox combo;
        JTextField txttokennumber;
        JButton btnstartquiz;
+       String getToken;
        
        
-       
-       public UserDashboard()
+       public UserDashboard(String token)
        {
+            Container c = getContentPane();
+            c.setLayout(null);
+            setSize(500,500);
+            c.setBackground(new Color(0, 0, 51));
+            c.setForeground(Color.white);
+
+            c.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+
+           setTitle("Choose Module || Enter Token No '");
            
-            setLayout(null);
-            setSize(400,400);
+           getToken = token;
+           
+            
             setTitle("Select Your Module Title");
-            setBackground(Color.yellow);
+            
             
             lblmodule = new JLabel("Module: ");
+            lblmodule.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+            lblmodule.setForeground(Color.white);
             combo = new JComboBox();
             combo.addItem("CS");
             combo.addItem("Java");
             combo.addItem("Python");
             combo.addItem("JavaScript");
+            combo.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+            combo.setForeground(Color.black);
             lbltokenbumber = new JLabel("Token Number");
+            lbltokenbumber.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+            lbltokenbumber.setForeground(Color.white);
             txttokennumber = new JTextField();
+            txttokennumber.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+            txttokennumber.setForeground(Color.black);
             btnstartquiz = new JButton("Start Quiz");
-            
-            lblmodule.setBounds(50, 50, 80, 40);
-            combo.setBounds(120, 50, 150, 40);
-            lbltokenbumber.setBounds(50,130,150,40);
-            txttokennumber.setBounds(150,130,150,40);
-            btnstartquiz.setBounds(100, 200, 200, 40);
-            btnstartquiz.setBackground(Color.green);
+            btnstartquiz.setBackground(new Color(102, 102, 255));
             btnstartquiz.setForeground(Color.white);
-            btnstartquiz.setFont(new Font("Arial", Font.BOLD,20));
+            btnstartquiz.setFont(new Font("Comic Sans MS", Font.PLAIN,24));
             
-            add(lblmodule);
-            add(combo);
-            add(lbltokenbumber);
-            add(txttokennumber);
-            add(btnstartquiz);
+            lblmodule.setBounds(40, 50, 100, 40);
+            combo.setBounds(220, 50, 150, 40);
+            lbltokenbumber.setBounds(50,130,180,40);
+            txttokennumber.setBounds(220,130,150,40);
+            btnstartquiz.setBounds(100, 200, 200, 40);
+           
+            
+            c.add(lblmodule);
+            c.add(combo);
+            c.add(lbltokenbumber);
+            c.add(txttokennumber);
+            c.add(btnstartquiz);
             
             
             btnstartquiz.addActionListener(this);
@@ -70,15 +90,33 @@ public class UserDashboard extends JFrame implements ActionListener{
     {
         mcq mq = new mcq();
         mq.setVisible(true);
-//        new mcq().setVisible(true);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(btnstartquiz))
         { 
-             new mcq(combo.getSelectedItem().toString()).setVisible(true);
+            try {
+                
+                if(txttokennumber.getText().equals(getToken))
+                {
+                
+                new mcq(combo.getSelectedItem().toString()).setVisible(true);  
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(rootPane, "Incorrect token input");
+                }
+            } 
+            catch (Exception de) {
+                System.out.println("Error: "+de);
+                
+            }
+           
+            
         }
     }
+
     
 }

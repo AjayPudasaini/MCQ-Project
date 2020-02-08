@@ -6,6 +6,7 @@
 package finalproject;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,6 +45,8 @@ public class databse {
        }
         return result;
    }
+   
+ 
    
    //usersignup
    public int usersignup(String name, String password, String email)
@@ -135,11 +138,12 @@ public class databse {
         return result;
     }
     
+    
     public ArrayList<String> showquestion(String question)
     {
         ArrayList<String> ar = new ArrayList<>();
         try {
-            String query = "SELECT * FROM addquestion WHERE module = ?";
+            String query = ("SELECT * FROM addquestion WHERE module = ?");
             
             psmt = conn.prepareStatement(query);
             psmt.setString(1, question);
@@ -164,26 +168,25 @@ public class databse {
    
       
     
-    public int saveAnswers(int marks)
-    {
-        int result = 0;
-        
-        try
-        {
-            psmt = conn.prepareStatement("Insert into score values( null, ?)");
-            psmt.setInt(1, marks);
-            
-            
-            result = psmt.executeUpdate(null);
 
-            
-        }
-        catch(Exception ex)
+    
+    public String GenerateToken()
+    {
+        String charSet;
+        String TokenNum;
+        
+        charSet="ghsoftwaricaantacoventryjastoncclixodearwhjfdlygagtdotkht34nxasieg5818345nccid";
+        TokenNum="";
+        
+        for (int i=1;i<=10;i++)
         {
-            
+            TokenNum+=charSet.charAt(new Random().nextInt(charSet.length()));
         }
-        return result;
+        
+        return TokenNum;
     }
+
+  
    
 }
 

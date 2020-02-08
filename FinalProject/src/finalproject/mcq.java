@@ -6,6 +6,8 @@
 package finalproject;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class mcq extends JFrame implements ActionListener{
     JLabel  lblquestion;
     JButton btnprev, btnnext, btnsubmit;
     JRadioButton rbopt1 = new JRadioButton("A ");
+    
     JRadioButton rbopt2 = new JRadioButton("B ");
     JRadioButton rbopt3 = new JRadioButton("C ");
     JRadioButton rbopt4 = new JRadioButton("D ");
@@ -44,33 +47,63 @@ public class mcq extends JFrame implements ActionListener{
     
     public mcq(String module)
     {
-        setLayout(null);
-        setSize(600, 600);
+        
+        Container c = getContentPane();
+        c.setLayout(null);
+        setSize(1000,800);
+        c.setBackground(new Color(0, 0, 51));
+        c.setForeground(Color.white);
+        
+        c.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        
+        
         setTitle("MULTIPLE CHOOSEN QUESTION");
         
         
         
         lblquestion = new JLabel("Questions");
-        
+        lblquestion.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        lblquestion.setForeground(Color.white);
         
         
         getMod = module;
         
         btnprev = new JButton("Previous");
+        btnprev.setBackground(new Color(102, 102, 255));
+        btnprev.setForeground(Color.white);
+        btnprev.setFont(new Font("Comic Sans MS", Font.PLAIN,24));
         btnnext = new JButton("Next");
+        btnnext.setBackground(new Color(102, 102, 255));
+        btnnext.setForeground(Color.white);
+        btnnext.setFont(new Font("Comic Sans MS", Font.PLAIN,24));
         btnsubmit = new JButton("Submit Answer & Show Result");
+        btnsubmit.setBackground(new Color(102, 102, 255));
+        btnsubmit.setForeground(Color.white);
+        btnsubmit.setFont(new Font("Comic Sans MS", Font.PLAIN,24));
         
         
-        lblquestion.setBounds(20, 50, 400, 40);
-        rbopt1.setBounds(20, 80, 200, 40);
-        rbopt2.setBounds(20, 120, 200, 40);
-        rbopt3.setBounds(20, 150, 200, 40);
-        rbopt4.setBounds(20, 180, 200, 40);
+        lblquestion.setBounds(20, 30, 900, 40);
+        rbopt1.setBounds(20, 80, 400, 40);
+        rbopt2.setBounds(20, 120, 400, 40);
+        rbopt3.setBounds(20, 150, 400, 40);
+        rbopt4.setBounds(20, 180, 400, 40);
         btnprev.setBounds(10, 250, 150, 40);
         btnnext.setBounds(300, 250, 150, 40);
-        btnsubmit.setBounds(170, 320, 230, 40);
+        btnsubmit.setBounds(170, 320, 400, 40);
         
         
+        rbopt1.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        rbopt1.setBackground(new Color(0, 0, 51));
+        rbopt1.setForeground(Color.white);
+        rbopt2.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        rbopt2.setBackground(new Color(0, 0, 51));
+        rbopt2.setForeground(Color.white);
+        rbopt3.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+       rbopt3.setBackground(new Color(0, 0, 51));
+        rbopt3.setForeground(Color.white);
+        rbopt4.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        rbopt4.setBackground(new Color(0, 0, 51));
+        rbopt4.setForeground(Color.white);
         
         
         
@@ -79,13 +112,15 @@ public class mcq extends JFrame implements ActionListener{
         bg.add(rbopt2);
         bg.add(rbopt3);
         bg.add(rbopt4);
-        add(btnprev);
-        add(btnnext);
+        c.add(btnprev);
+        c.add(btnnext);
         add(btnsubmit);
         this.add(rbopt1);
         this.add(rbopt2);
         this.add(rbopt3);
         this.add(rbopt4);
+        
+        
         
         btnprev.addActionListener(this);
         btnnext.addActionListener(this);
@@ -165,7 +200,7 @@ public class mcq extends JFrame implements ActionListener{
                 databse db = new databse();
             ArrayList<String> q = db.showquestion(getMod);
             
-            current = current -10;
+            current -= 10;
             
             lblquestion.setText(q.get(current + 5));
             rbopt1.setText(q.get(current +1 +5));
@@ -174,14 +209,16 @@ public class mcq extends JFrame implements ActionListener{
             rbopt4.setText(q.get(current +4 +5));
             
             current = current + 10;
+             
 
                 
             } catch (IndexOutOfBoundsException ex) {
                 if(current < 0)
                 {
                     current = 0;
+                    JOptionPane.showMessageDialog(null, "You Reached" + "of the question", "Error", JOptionPane.OK_OPTION);
+//                    btnprev.setEnabled(false);
                 }
-                JOptionPane.showMessageDialog(null, "You Reached" + "of the question", "Error", JOptionPane.OK_OPTION);
                 
             }
         }
@@ -191,6 +228,9 @@ public class mcq extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, marks, "Your Result is:",
             JOptionPane.INFORMATION_MESSAGE);
             //db.saveAnswers(marks);
+            btnprev.setEnabled(false);
+            btnnext.setEnabled(false);
+            
             
         }
     }
